@@ -1,12 +1,16 @@
 package core.java.functional.programming;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class FP01PlayingWithStreamAPI {
 
 	public static void main(String ar[]) {
+		List<String> stringList = List.of("Siju", "Babu", "Anu", "Manu", "Ferher");
 		List<Integer> integerList = List.of(22, 1, 8, 9, 27, 81, 37);
-		reduceMethod(integerList);
+		//reduceMethod(integerList);
+		//distinctANDsortMethod(integerList);
+		customSorting(integerList);
 		
 	}
 	
@@ -38,6 +42,23 @@ public class FP01PlayingWithStreamAPI {
 		integerList.stream().sorted().forEach(System.out::println);
 		//Distinct and Sort combined
 		integerList.stream().distinct().sorted().forEach(System.out::println);
+	}
+	
+	//StreamAPI has default sorting and in some cases we can make use of that default sort. 
+	//But let say if we want to sort based on our custom algorithm then how can we achieve that.	
+	public static void customSorting(List<Integer> integerList) {
+		List<String> stringList = List.of("Siju", "Babu", "Anu", "Manu", "Ferher");
+		//Below is the default order of stream API Numbers [1, 2, 3 ..... N] || Alphabet [A, B, C ...... Z] 
+		integerList.stream().sorted(Comparator.naturalOrder()).forEach(System.out::println);
+		System.out.println("-------------------------------------------------------------");
+		//Below is the reverse of the above
+		integerList.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
+		System.out.println("-------------------------------------------------------------");
+		//Now let say you want to write custom logic to do sorting. Below is the solution for sorting based on even number
+		integerList.stream().sorted(Comparator.comparing(i->i%2!=0)).forEach(System.out::println);
+		System.out.println("-------------------------------------------------------------");
+		//Below logic is to sort a string based on its length
+		stringList.stream().sorted(Comparator.comparing(str -> str.length())).forEach(System.out::println);
 	}
 	
 	public void reduceMethodMoreExample(List<Integer> integerList) {
