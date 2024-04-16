@@ -1,7 +1,9 @@
 package core.java.functional.programming.custom;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -158,5 +160,21 @@ public class FP02CustomClass {
 		//Min
 		//It will return min review value of a courses whose review score is greater than 90 : Average result is optional
 		System.out.println(courses.stream().filter(reviewScoreGreaterThan90Predicate).mapToInt(Course::getNoOfStudents).min());
+		//**************************************************************************************
+		
+		//*********************** grouping ***************************************************
+		//GROUPING
+		//Below is to group the courses based on the category
+		System.out.println(courses.stream().collect(Collectors.groupingBy(Course::getCategory)));
+		Map<String, List<Course>> hashMap = courses.stream().collect(Collectors.groupingBy(Course::getCategory));
+		//Below is to group the courses based on the category
+		System.out.println(courses.stream().collect(Collectors.groupingBy(Course::getCategory, Collectors.counting())));
+		//Below to get the course having maximum review in each category
+		System.out.println(courses.stream().collect(Collectors.groupingBy(Course::getCategory, Collectors.maxBy(Comparator.comparing(Course::getReviewScore)))));
+		//Below to get the course name instead of entire course and group based on the category
+		System.out.println(courses.stream().collect(Collectors.groupingBy(Course::getCategory, Collectors.mapping(Course::getName, Collectors.toList()))));
+		//****************************************************************************************
+		
+		
 	}
 }
